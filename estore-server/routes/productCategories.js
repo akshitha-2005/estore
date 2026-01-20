@@ -1,6 +1,6 @@
 const express = require("express");
 const mysql = require("mysql2");
-const productCategories = express();
+const productCategories = express.Router();
 
 //Creating a pool is a best practise for handling multiple database queries efficiently.
 const pool = mysql.createPool({
