@@ -7,19 +7,16 @@ const PORT = 5001;
 const pool = mysql.createPool({
   host: "localhost",
   user: "root",
-  password: "*******",
+  password: "Blackbottle$123",
   database: "estore",
   port: 3306,
   multipleStatements: true,
 });
 
 app.get("/", (req, res) => {
-  pool.getConnection((err, connention) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.status(200).send("Connection Established");
-    }
+  pool.query("select * from categories", (error, categories) => {
+    if (error) res.status(500).send(error);
+    else res.status(200).send(categories);
   });
 });
 
