@@ -1,6 +1,7 @@
 import { CategoryService } from './../services/category.service';
 import { Category } from '../types/category';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { CategoriesStoreItem } from '../services/categories.storeItem';
 
 @Component({
   selector: 'app-sidenavigation',
@@ -9,16 +10,12 @@ import { Component } from '@angular/core';
   styleUrl: './sidenavigation.component.css',
 })
 export class SidenavigationComponent {
-  categories: Category[] = [];
+  private categoryStore = inject(CategoriesStoreItem);
 
-  constructor(categoryService: CategoryService) {
-    categoryService.getAllCategories().subscribe((categories) => {
-      this.categories = categories;
-    });
-  }
+  readonly categories = this.categoryStore.categories;
 
   getCategories(parentCategoryId?: number): Category[] {
-    return this.categories.filter((category) =>
+    return this.categories().filter((category) =>
       parentCategoryId
         ? category.parent_category_id === parentCategoryId
         : category.parent_category_id === null,

@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
-import { categories } from '../sampleData/categories.data';
 import { Observable } from 'rxjs';
 import { Category } from '../types/category';
 import { HttpClient } from '@angular/common/http';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class CategoryService {
   constructor(private http: HttpClient) {}
 
