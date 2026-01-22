@@ -7,9 +7,9 @@
       <select
         class="w-auto bg-gray-300 h-full border-none font-semibold px-2 pr-5"
       >
-        <option value="">Men</option>
-        <option value="">Women</option>
-        <option value="">Kids</option>
+        @for (category of categoryStore.topLevelCategories(); track $index) {
+          <option>{{ category.category }}</option>
+        }
       </select>
       <input
         class="w-[90%] h-full inline-block border-none outline-none px-3"
