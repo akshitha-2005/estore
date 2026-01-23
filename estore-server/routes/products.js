@@ -4,7 +4,21 @@ const pool = require("../shared/pool");
 const { error } = require("console");
 
 products.get("/", (req, res) => {
-  pool.query("select * from products", (error, products) => {
+  const mainCategoryId = req.query.mainCategoryId;
+  const subCategoryId = req.query.subCategoryId;
+
+  let query = "select * from products";
+  let queryParams = [];
+
+  if (mainCategoryId) {
+    query = `select products.* from products join categories on products.category_id = categories.id where categories.parent_category_id = ?`;
+    queryParams.push(mainCategoryId);
+  } else if (subCategoryId) {
+    query += "where category_id = ?";
+    queryParams.push(subCategoryId);
+  }
+
+  pool.query(query, queryParams, (error, products) => {
     if (error) res.status(500).send(error);
     else res.status(200).send(products);
   });
