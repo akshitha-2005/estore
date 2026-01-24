@@ -1,7 +1,7 @@
-import { CategoryService } from './../services/category.service';
+import { CategoryService } from '../services/category/category.service';
 import { Category } from '../types/category';
 import { Component, inject } from '@angular/core';
-import { CategoriesStoreItem } from '../services/categories.storeItem';
+import { CategoriesStoreItem } from '../services/category/categories.storeItem';
 
 @Component({
   selector: 'app-sidenavigation',
