@@ -1,11 +1,10 @@
 const express = require("express");
 const products = express.Router();
 const pool = require("../shared/pool");
-const { error } = require("console");
 
 products.get("/", (req, res) => {
-  const mainCategoryId = req.query.mainCategoryId;
-  const subCategoryId = req.query.subCategoryId;
+  const mainCategoryId = req.query.maincategoryid;
+  const subCategoryId = req.query.subcategoryid;
 
   let query = "select * from products";
   let queryParams = [];
@@ -14,7 +13,7 @@ products.get("/", (req, res) => {
     query = `select products.* from products join categories on products.category_id = categories.id where categories.parent_category_id = ?`;
     queryParams.push(mainCategoryId);
   } else if (subCategoryId) {
-    query += "where category_id = ?";
+    query += " where category_id = ?";
     queryParams.push(subCategoryId);
   }
 

@@ -11,27 +11,33 @@
   <!--- Accordion -->
   <div class="mt-4 space-y-3">
     @for (mainCategory of getCategories(); track mainCategory.id) {
-    <details class="group rounded-t-xl bg-white border border-gray-200">
-      <!-- group - A utility class to apply styling on the child elements based on the parent's state. It cats as a controller -->
-      <summary
-        class="cursor-pointer list-none px-5 py-3 bg-blue-100 font-semibold text-gray-600 hover:bg-blue-50 flex justify-between items-center transition rounded-t-xl"
-      >
-        <span class="text-gray-700">{{ mainCategory.category }}</span>
-        <i
-          class="fa-solid fa-angle-down transform transition-transform group-open:rotate-180 text-gray-400"
-        ></i>
-      </summary>
-      <div class="px-5 py-4">
-        <ul class="space-y-3">
-          @for (subCategory of getCategories(mainCategory.id); track
-          subCategory.id) {
-          <li class="text-center">
-            <a href="#" class="link-hover">{{ subCategory.category }}</a>
-          </li>
-          }
-        </ul>
-      </div>
-    </details>
+      <details class="group rounded-t-xl bg-white border border-gray-200">
+        <!-- group - A utility class to apply styling on the child elements based on the parent's state. It cats as a controller -->
+        <summary
+          class="cursor-pointer list-none px-5 py-3 bg-blue-100 font-semibold text-gray-600 hover:bg-blue-50 flex justify-between items-center transition rounded-t-xl"
+        >
+          <span class="text-gray-700">{{ mainCategory.category }}</span>
+          <i
+            class="fa-solid fa-angle-down transform transition-transform group-open:rotate-180 text-gray-400"
+          ></i>
+        </summary>
+        <div class="px-5 py-4">
+          <ul class="space-y-3">
+            @for (
+              subCategory of getCategories(mainCategory.id);
+              track subCategory.id
+            ) {
+              <li class="text-center">
+                <a
+                  (click)="onSubCategoryClick(subCategory)"
+                  class="link-hover cursor-pointer"
+                  >{{ subCategory.category }}</a
+                >
+              </li>
+            }
+          </ul>
+        </div>
+      </details>
     }
   </div>
 </div>

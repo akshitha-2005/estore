@@ -33,4 +33,12 @@ export class HomeComponent {
     this.categoriesStoreItem.loadCateories();
     this.productsStoreItem.loadProducts();
   }
+
+  onSelectSubCategory(subCategoryId: number): void {
+    this.productsStoreItem.loadProducts({ subcategoryid: subCategoryId });
+  }
+
+  onSelectCategory(mainCategoryId: number) {
+    this.productsStoreItem.loadProducts({ maincategoryid: mainCategoryId });
+  }
 }

@@ -1,6 +1,6 @@
 import { CategoryService } from '../services/category/category.service';
 import { Category } from '../types/category';
-import { Component, inject } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { CategoriesStoreItem } from '../services/category/categories.storeItem';
 
 @Component({
@@ -13,6 +13,7 @@ export class SidenavigationComponent {
   private categoryStore = inject(CategoriesStoreItem);
 
   readonly categories = this.categoryStore.categories;
+  readonly subCategoryClicked = output<number>();
 
   getCategories(parentCategoryId?: number): Category[] {
     return this.categories().filter((category) =>
@@ -20,5 +21,9 @@ export class SidenavigationComponent {
         ? category.parent_category_id === parentCategoryId
         : category.parent_category_id === null,
     );
+  }
+
+  onSubCategoryClick(subCategory: Category): void {
+    this.subCategoryClicked.emit(subCategory.id);
   }
 }
