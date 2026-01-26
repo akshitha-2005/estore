@@ -1,26 +1,37 @@
 <div class="flex flex-wrap justify-evenly">
-  @for (product of productsStoreItem.products(); track product.id) {
-    <div class="mx-4 p-3 mt-4 mb-4 flex-col rounded-lg shadow-md">
-      <div class="overflow-hidden rounded-md">
-        <img
-          class="rounded-md mx-auto transition-transform duration-300 ease-in-out transform hover:scale-105"
-          [src]="'../../../../assets/images/' + product.product_img"
-          [alt]="product.product_name"
-        />
-      </div>
-      <div class="p-4 text-center">
-        <h5 class="font-semibold">
-          <a href="#" class="text-black hover:text-black no-underline">{{
-            product.product_name
-          }}</a>
-        </h5>
-        <p class="text-base font-normal mt-1">{{ product.price | currency }}</p>
-        @if (product.ratings > 0) {
-          <ng-container>
-            <app-ratings [score]="product.ratings"></app-ratings>
-          </ng-container>
-        }
-      </div>
+  @if (productsStoreItem.products().length === 0) {
+    <div class="text-center w-full mt-10 text-[50px] text-gray-500 font-medium">
+      <p>
+        <i class="fa-solid fa-box-open"></i>
+        No products found
+      </p>
     </div>
+  } @else {
+    @for (product of productsStoreItem.products(); track product.id) {
+      <div class="mx-4 p-3 mt-4 mb-4 flex-col rounded-lg shadow-md">
+        <div class="overflow-hidden rounded-md">
+          <img
+            class="rounded-md mx-auto transition-transform duration-300 ease-in-out transform hover:scale-105"
+            [src]="'../../../../assets/images/' + product.product_img"
+            [alt]="product.product_name"
+          />
+        </div>
+        <div class="p-4 text-center">
+          <h5 class="font-semibold">
+            <a href="#" class="text-black hover:text-black no-underline">{{
+              product.product_name
+            }}</a>
+          </h5>
+          <p class="text-base font-normal mt-1">
+            {{ product.price | currency }}
+          </p>
+          @if (product.ratings > 0) {
+            <ng-container>
+              <app-ratings [score]="product.ratings"></app-ratings>
+            </ng-container>
+          }
+        </div>
+      </div>
+    }
   }
 </div>
