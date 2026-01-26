@@ -4,10 +4,11 @@ import { Product } from '../home/types/products.type';
 import { CommonModule } from '@angular/common';
 import { RatingsComponent } from '../ratings/ratings.component';
 import { ProductsStoreItem } from '../home/services/product/products.storeItem';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-products',
-  imports: [CommonModule, RatingsComponent],
+  imports: [CommonModule, RatingsComponent, RouterLink],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
 })
