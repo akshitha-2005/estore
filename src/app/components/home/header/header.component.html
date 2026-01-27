@@ -3,29 +3,31 @@
     <div class="text-white ml-2 p-3 w-[23%]">
       <h1 class="text-xl font-bold">eStore</h1>
     </div>
-    <div class="p-0 my-4 w-[50%] h-[2.5rem] bg-white flex items-center">
-      <select
-        #categoryOptions
-        class="w-auto bg-gray-300 h-full border-none font-semibold px-2 pr-5"
-      >
-        @for (category of categoryStore.topLevelCategories(); track $index) {
-          <option [value]="category.id">{{ category.category }}</option>
-        }
-      </select>
-      <input
-        #keyword
-        class="w-[90%] h-full inline-block border-none outline-none px-3"
-        placeholder="Search..."
-      />
-      <button
-        (click)="onClickSearch(keyword.value, categoryOptions.value)"
-        class="w=[10%] h-10 border-none bg-gray-300 flex justify-center items-center"
-      >
-        <i
-          class="fa-solid fa-magnifying-glass text-gray-600 text-xl cursor-pointer"
-        ></i>
-      </button>
-    </div>
+    @if (displaySearch()) {
+      <div class="p-0 my-4 w-[50%] h-[2.5rem] bg-white flex items-center">
+        <select
+          #categoryOptions
+          class="w-auto bg-gray-300 h-full border-none font-semibold px-2 pr-5"
+        >
+          @for (category of categoryStore.topLevelCategories(); track $index) {
+            <option [value]="category.id">{{ category.category }}</option>
+          }
+        </select>
+        <input
+          #keyword
+          class="w-[90%] h-full inline-block border-none outline-none px-3"
+          placeholder="Search..."
+        />
+        <button
+          (click)="onClickSearch(keyword.value, categoryOptions.value)"
+          class="w=[10%] h-10 border-none bg-gray-300 flex justify-center items-center"
+        >
+          <i
+            class="fa-solid fa-magnifying-glass text-gray-600 text-xl cursor-pointer"
+          ></i>
+        </button>
+      </div>
+    }
     <div class="flex items-center w-[27%] gap-6 justify-end h-full">
       <div class="flex items-center gap-2 text-white">
         <i class="fa-solid fa-user text-[1.3em]"></i>
