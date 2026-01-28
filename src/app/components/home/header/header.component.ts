@@ -35,4 +35,8 @@ export class HeaderComponent {
       keyword: keyword,
     });
   }
+
+  navigateToCart(): void {
+    this.router.navigate(['home/cart']);
+  }
 }
