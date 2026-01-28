@@ -7,6 +7,7 @@ import { ProductsStoreItem } from './services/product/products.storeItem';
 import { ProductsService } from './services/product/products.service';
 import { SearchKeyword } from './types/searchKeyword.type';
 import { RouterOutlet } from '@angular/router';
+import { CartStoreItem } from './services/cart/cart.storeItem';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,7 @@ import { RouterOutlet } from '@angular/router';
     CategoriesStoreItem,
     ProductsStoreItem,
     ProductsService,
+    CartStoreItem,
   ],
 })
 export class HomeComponent {

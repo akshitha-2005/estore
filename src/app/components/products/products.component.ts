@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { RatingsComponent } from '../ratings/ratings.component';
 import { ProductsStoreItem } from '../home/services/product/products.storeItem';
 import { RouterLink } from '@angular/router';
+import { CartStoreItem } from '../home/services/cart/cart.storeItem';
 
 @Component({
   selector: 'app-products',
@@ -13,5 +14,12 @@ import { RouterLink } from '@angular/router';
   styleUrl: './products.component.css',
 })
 export class ProductsComponent {
-  constructor(public productsStoreItem: ProductsStoreItem) {}
+  constructor(
+    public productsStoreItem: ProductsStoreItem,
+    private cart: CartStoreItem,
+  ) {}
+
+  addToCart(product: Product) {
+    this.cart.addProduct(product);
+  }
 }

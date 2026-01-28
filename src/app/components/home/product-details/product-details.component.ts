@@ -5,6 +5,7 @@ import { ProductsService } from '../services/product/products.service';
 import { Product } from '../types/products.type';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
+import { CartStoreItem } from '../services/cart/cart.storeItem';
 @Component({
   selector: 'app-product-details',
   imports: [RatingsComponent, CommonModule],
@@ -14,6 +15,7 @@ import { CommonModule } from '@angular/common';
 export class ProductDetailsComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly productsService = inject(ProductsService);
+  private readonly cart = inject(CartStoreItem);
 
   readonly product = signal<Product | null>(null);
 
@@ -29,6 +31,12 @@ export class ProductDetailsComponent {
           this.product.set(Array.isArray(res) ? res[0] : res);
         });
       return;
+    }
+  }
+  addToCart() {
+    const product = this.product();
+    if (product) {
+      this.cart.addProduct(product);
     }
   }
 }

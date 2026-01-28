@@ -43,9 +43,23 @@
           >
         </h5>
       </div>
-      <div class="flex items-center gap-4 text-white text-[1.3em]">
+      <div class="relative flex items-center gap-4 text-white text-[1.3em]">
         <i class="fa-regular fa-heart"></i>
-        <i class="fa-solid fa-cart-shopping"></i>
+        <button
+          type="button"
+          class="flex items-center justify-center text-white p-2 rounded-full bg-gray-700 hover:bg-gray-800 transition-colors cursor-pointer"
+        >
+          <i class="fa-solid fa-cart-shopping text-[1.3em]"></i>
+        </button>
+        @if (cart.cart()) {
+          @if (cart.totalProducts() > 0) {
+            <span
+              class="absolute -top-1 -right-1 flex items-center justify-center text-[0.7rem] font-semibold text-white bg-amber-500 rounded-full w-5 h-5"
+            >
+              {{ cart.totalProducts() }}
+            </span>
+          }
+        }
       </div>
     </div>
   </div>
