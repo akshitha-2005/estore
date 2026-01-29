@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { CartItem } from '../types/cart.type';
 import { Router } from '@angular/router';
 import { CartStoreItem } from '../services/cart/cart.storeItem';
+import { CommonModule } from '@angular/common';
+import { RatingsComponent } from '../../ratings/ratings.component';
 
 @Component({
   selector: 'app-cart',
-  imports: [],
+  imports: [CommonModule, RatingsComponent],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })

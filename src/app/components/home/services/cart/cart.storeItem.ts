@@ -1,7 +1,7 @@
-import { signal, computed, IterableDiffers } from '@angular/core';
+import { signal, computed, Injectable } from '@angular/core';
 import { CartItem } from '../../types/cart.type';
 import { Product } from '../../types/products.type';
-
+@Injectable()
 export class CartStoreItem {
   private readonly _products = signal<CartItem[]>([]);
 
