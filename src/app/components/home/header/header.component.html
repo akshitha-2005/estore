@@ -1,13 +1,22 @@
-<div class="w-full shadow-lg shadow-gray-500/50 bg-gray-900">
-  <div class="flex items-center">
-    <div class="text-white ml-2 p-3 w-[23%]">
-      <h1 class="text-xl font-bold">eStore</h1>
-    </div>
+<div
+  class="fixed top-0 left-0 z-50 w-full min-h-[5rem] shadow-[2px_2px_20px_gray] bg-gray-900 flex flex-wrap md:flex-nowrap items-center px-4 gap-y-2"
+>
+  <!-- Logo -->
+  <div class="text-white px-3 md:w-[23%] w-full flex items-center">
+    <h1 class="text-3xl font-bold cursor-pointer">
+      <a routerLink="/home/products" class="cursor-pointer">eStore</a>
+    </h1>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="w-full md:w-[50%] flex items-center justify-center h-[2.5rem]">
     @if (displaySearch()) {
-      <div class="p-0 my-4 w-[50%] h-[2.5rem] bg-white flex items-center">
+      <div
+        class="w-full bg-white flex items-center rounded-md overflow-hidden h-full"
+      >
         <select
           #categoryOptions
-          class="w-auto bg-gray-300 h-full border-none font-semibold px-2 pr-5"
+          class="bg-gray-300 h-full border-none font-semibold px-2 pr-5"
         >
           @for (category of categoryStore.topLevelCategories(); track $index) {
             <option [value]="category.id">{{ category.category }}</option>
@@ -15,12 +24,12 @@
         </select>
         <input
           #keyword
-          class="w-[90%] h-full inline-block border-none outline-none px-3"
+          class="w-full h-full border-none outline-none px-3"
           placeholder="Search..."
         />
         <button
           (click)="onClickSearch(keyword.value, categoryOptions.value)"
-          class="w=[10%] h-10 border-none bg-gray-300 flex justify-center items-center"
+          class="w-[10%] min-w-[2.5rem] h-full border-none bg-gray-300 flex justify-center items-center cursor-pointer"
         >
           <i
             class="fa-solid fa-magnifying-glass text-gray-600 text-xl cursor-pointer"
@@ -28,35 +37,38 @@
         </button>
       </div>
     }
-    <div class="flex items-center w-[27%] gap-6 justify-end h-full">
-      <div class="flex items-center gap-2 text-white">
-        <i class="fa-solid fa-user text-[1.3em]"></i>
+  </div>
 
-        <a
-          routerLink="/home/signup"
-          class="px-1 py-1 rounded transition-all duration-300 hover:bg-white hover:text-gray-900"
-          >Sign in / Join</a
-        >
-      </div>
-      <div class="relative flex items-center gap-4 text-white text-[1.3em]">
-        <i class="fa-regular fa-heart"></i>
-        <button
-          type="button"
-          class="flex items-center justify-center text-white p-2 rounded-full bg-gray-700 hover:bg-gray-800 transition-colors cursor-pointer"
-          (click)="navigateToCart()"
-        >
-          <i class="fa-solid fa-cart-shopping text-[1.3em]"></i>
-        </button>
-        @if (cart.cart()) {
-          @if (cart.totalProducts() > 0) {
-            <span
-              class="absolute -top-1 -right-1 flex items-center justify-center text-[0.7rem] font-semibold text-white bg-amber-500 rounded-full w-5 h-5"
-            >
-              {{ cart.totalProducts() }}
-            </span>
-          }
+  <!-- Auth & Cart -->
+  <div
+    class="w-full md:w-[27%] flex items-center justify-between md:justify-end gap-4 text-white text-lg"
+  >
+    <div class="flex items-center gap-2">
+      <i class="fa-solid fa-user text-[1.3em]"></i>
+      <a
+        routerLink="/home/signup"
+        class="px-1 py-1 rounded transition-all duration-300 hover:bg-white hover:text-gray-900"
+        >Sign in / Join</a
+      >
+    </div>
+    <div class="relative flex items-center">
+      <button
+        type="button"
+        class="flex items-center justify-center text-white p-2 rounded-full bg-gray-700 hover:bg-gray-800 transition-colors cursor-pointer"
+        (click)="navigateToCart()"
+      >
+        <i class="fa-solid fa-cart-shopping text-[1.3em]"></i>
+      </button>
+
+      @if (cart.cart()) {
+        @if (cart.totalProducts() > 0) {
+          <span
+            class="absolute -top-1 -right-2 flex items-center justify-center text-[0.7rem] font-semibold text-white bg-amber-500 rounded-full w-5 h-5"
+          >
+            {{ cart.totalProducts() }}
+          </span>
         }
-      </div>
+      }
     </div>
   </div>
 </div>
