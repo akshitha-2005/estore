@@ -1,10 +1,19 @@
 import { filter } from 'rxjs';
-import { signal, computed, Injectable } from '@angular/core';
+import { signal, computed, Injectable, effect } from '@angular/core';
 import { CartItem } from '../../types/cart.type';
 import { Product } from '../../types/products.type';
 @Injectable()
 export class CartStoreItem {
-  private readonly _products = signal<CartItem[]>([]);
+  private readonly _products = signal<CartItem[]>(this.loadFromSession());
+
+  private _saveEffect = effect(() => {
+    const products = this._products();
+    if (products.length === 0) {
+      sessionStorage.removeItem('cart');
+    } else {
+      sessionStorage.setItem('cart', JSON.stringify(products));
+    }
+  });
 
   readonly totalAmount = computed(() =>
     this._products().reduce((sum, item) => sum + item.amount, 0),
@@ -73,5 +82,14 @@ export class CartStoreItem {
       (item) => item.product.id !== cartItem.product.id,
     );
     this._products.set(updatedItems);
+  }
+
+  private loadFromSession(): CartItem[] {
+    const storedProducts = sessionStorage.getItem('cart');
+    try {
+      return storedProducts ? JSON.parse(storedProducts) : [];
+    } catch {
+      return [];
+    }
   }
 }
