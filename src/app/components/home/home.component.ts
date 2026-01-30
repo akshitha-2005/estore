@@ -6,8 +6,9 @@ import { CategoriesStoreItem } from './services/category/categories.storeItem';
 import { ProductsStoreItem } from './services/product/products.storeItem';
 import { ProductsService } from './services/product/products.service';
 import { SearchKeyword } from './types/searchKeyword.type';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, NavigationEnd, Router } from '@angular/router';
 import { CartStoreItem } from './services/cart/cart.storeItem';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -26,9 +27,18 @@ export class HomeComponent {
   constructor(
     private categoriesStoreItem: CategoriesStoreItem,
     private productsStoreItem: ProductsStoreItem,
+    private router: Router,
   ) {
     this.categoriesStoreItem.loadCateories();
     this.productsStoreItem.loadProducts();
+
+    router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event) => {
+        if ((event as NavigationEnd).url === '/home') {
+          router.navigate(['/home/products']);
+        }
+      });
   }
 
   onSelectCategory(mainCategoryId: number) {

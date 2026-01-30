@@ -2,13 +2,13 @@ import { Component, output, signal } from '@angular/core';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { CategoriesStoreItem } from '../services/category/categories.storeItem';
 import { SearchKeyword } from '../types/searchKeyword.type';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter } from 'rxjs';
 import { CartStoreItem } from '../services/cart/cart.storeItem';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
