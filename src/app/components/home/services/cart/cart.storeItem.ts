@@ -1,3 +1,4 @@
+import { filter } from 'rxjs';
 import { signal, computed, Injectable } from '@angular/core';
 import { CartItem } from '../../types/cart.type';
 import { Product } from '../../types/products.type';
@@ -45,5 +46,32 @@ export class CartStoreItem {
       };
       this._products.set(updatedItems);
     }
+  }
+
+  decreaseProductQuantity(cartItem: CartItem): void {
+    const updatedItems = this._products()
+      .map((item) => {
+        if (item.product.id === cartItem.product.id) {
+          if (item.quantity <= 1) {
+            return null;
+          }
+          return {
+            ...item,
+            quantity: item.quantity - 1,
+            amount: item.amount - Number(item.product.price),
+          };
+        }
+        return item;
+      })
+      .filter(Boolean) as CartItem[]; //Remove nulls
+
+    this._products.set(updatedItems);
+  }
+
+  removeProduct(cartItem: CartItem): void {
+    const updatedItems = this._products().filter(
+      (item) => item.product.id !== cartItem.product.id,
+    );
+    this._products.set(updatedItems);
   }
 }
