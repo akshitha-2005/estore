@@ -3,7 +3,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-user-signup',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './user-signup.component.html',
   styleUrl: './user-signup.component.css',
 })
