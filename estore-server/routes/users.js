@@ -57,7 +57,11 @@ user.post("/login", async (req, res) => {
       "estore-secret-key",
       { expiresIn: "1h" },
     );
-    res.status(200).send({ token, message: "Login successful" });
+    res.status(200).send({
+      token: token,
+      expiresInSeconds: 3600,
+      message: "Login successful",
+    });
   } catch (err) {
     console.log("Login Error: ", err);
     res.status(500).send({
