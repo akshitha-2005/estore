@@ -43,14 +43,39 @@
   <div
     class="w-full md:w-[27%] flex items-center justify-between md:justify-end gap-4 text-white text-lg"
   >
-    <div class="flex items-center gap-2">
-      <i class="fa-solid fa-user text-[1.3em]"></i>
-      <a
-        routerLink="/home/login"
-        class="px-1 py-1 rounded transition-all duration-300 hover:bg-white hover:text-gray-900"
-        >Sign in / Join</a
-      >
-    </div>
+    @if (!isUserAuthenticated()) {
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-user text-[1.3em]"></i>
+        <a
+          routerLink="/home/login"
+          class="px-1 py-1 rounded transition-all duration-300 hover:bg-white hover:text-gray-900"
+          >Sign in / Join</a
+        >
+      </div>
+    }
+    @if (isUserAuthenticated()) {
+      <div class="relative inline-block text-left">
+        <button
+          (click)="toggleDropdown()"
+          class="inline-flex items-center gap-2 px-4 py-2 bg-gray-700 text-white font-medium rounded-md hover:bg-gray-800 transition text-base cursor-pointer"
+        >
+          <i class="fa-solid fa-user text-[1.3em]"></i>
+          Hi {{ userName() }}
+          <i class="fa-solid fa-chevron-down text-[1.3em]"></i>
+        </button>
+        @if (dropdownVisible) {
+          <div
+            class="absolute right-0 mt-2 w-36 bg-white rounded-md shadow-md border border-gray-200 z-50"
+          >
+            <ul class="py-1 text-sm text-gray-700">
+              <li class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                Logout
+              </li>
+            </ul>
+          </div>
+        }
+      </div>
+    }
     <div class="relative flex items-center">
       <button
         type="button"

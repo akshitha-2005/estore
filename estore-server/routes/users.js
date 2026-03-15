@@ -19,11 +19,12 @@ user.post("/signup", async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await pool.promise().query(
-      `insert into users (email, firstName, lastName, address, city, state, pin, password) values
-            (?,?,?,?,?,?,?,?)`,
-      [email, firstName, lastName, address, city, state, pin, hashedPassword],
-    );
+    await pool
+      .promise()
+      .query(
+        `insert into users (email, firstName, lastName, address, city, state, pin, password) values (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [email, firstName, lastName, address, city, state, pin, hashedPassword],
+      );
 
     res.status(201).send({ message: "Success" });
   } catch (error) {
@@ -37,6 +38,7 @@ user.post("/signup", async (req, res) => {
 
 user.post("/login", async (req, res) => {
   const { email, password } = req.body;
+
   try {
     const [users] = await pool
       .promise()
@@ -45,21 +47,29 @@ user.post("/login", async (req, res) => {
     if (users.length === 0) {
       return res.status(401).send({ message: "User does not exist." });
     }
-    const user = user[0];
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    const foundUser = users[0];
+    const passwordMatch = await bcrypt.compare(password, foundUser.password);
 
     if (!passwordMatch) {
-      return res.status(401).send({ message: "Invalid password" });
+      return res.status(401).send({ message: "Invalid password." });
     }
 
     const token = jwt.sign(
-      { id: user.id, email: user.email },
+      { id: foundUser.id, email: foundUser.email },
       "estore-secret-key",
       { expiresIn: "1h" },
     );
     res.status(200).send({
       token: token,
       expiresInSeconds: 3600,
+      user: {
+        firstName: foundUser.firstName,
+        lastName: foundUser.lastName,
+        address: foundUser.address,
+        city: foundUser.city,
+        state: foundUser.state,
+        pin: foundUser.pin,
+      },
       message: "Login successful",
     });
   } catch (err) {
@@ -70,4 +80,5 @@ user.post("/login", async (req, res) => {
     });
   }
 });
+
 module.exports = user;
